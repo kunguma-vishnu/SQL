@@ -143,13 +143,15 @@ as immediate_percentage from delivery;
 
 ```
 select ad_id,
-round(avg(case when action="Clicked" then 1 else 0 end)*100,2) as ctr from Ads group by ad_id order by ctr desc,ad_id;
+round(avg(case when action="Clicked" then 1 else 0 end)*100,2) as ctr from Ads
+ group by ad_id order by ctr desc,ad_id;
 ```
 
 ### 21. [Find the team size Leetcode](https://leetcode.com/problems/find-the-team-size/) - Write an SQL query to find the team size of each of the employees. Return result table in any order.
 
 ```
-select e1.employee_id,count(*) from employee e1 left join employee e2 using(team_id) group by e1.employee_id;
+select e1.employee_id,
+count(*) from employee e1 left join employee e2 using(team_id) group by e1.employee_id;
 ```
 
 ### 22. [Weather Type Leetcode](https://leetcode.com/problems/weather-type-in-each-country/) - Write an SQL query to find the type of weather in each country for November 2019. The type of weather is: ● Cold if the average weather_state is less than or equal 15, ● Hot if the average weather_state is greater than or equal to 25, and ● Warm otherwise. Return result table in any order.
