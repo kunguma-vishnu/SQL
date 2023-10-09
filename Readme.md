@@ -62,71 +62,88 @@ select count(city) - count(distinct city) from station;
 
 ```
 select city,length(city) from station order by length(city),city limit 1;
-select city,length(city) from station order by length(city) desc,city limit 1;
+select city,length(city) from station
+ order by length(city) desc,city limit 1;
 ```
 
 ### 11. Query the list of CITY names starting with vowels (i.e., a, e, i, o, or u) from STATION. Your result cannot contain duplicates.
 
 ```
-select distinct city from station where city like 'A%' or city like 'E%' or city like 'I%' or city like 'O%' or city like 'U%';
+select distinct city from station
+ where city like 'A%' or city like 'E%' or
+  city like 'I%' or city like 'O%' or city like 'U%';
 ```
 or
 ```
-select distinct city from customers where city regexp '[AEIOUaeiou].+';
+select distinct city from customers 
+where city regexp '[AEIOUaeiou].+';
 ```
 
 ### 12. Query the list of CITY names ending with vowels (a, e, i, o, u) from STATION. Your result cannot contain duplicates.
 
 ```
-select distinct city from station where city like '%a' or city like '%e' or city like '%i' or city like '%o' or city like '%u';
+select distinct city from station
+ where city like '%a' or city like '%e' or
+  city like '%i' or city like '%o' or city like '%u';
 ```
 
 ### 13. Query the list of CITY names from STATION that do not start with vowels. Your result cannot contain duplicates.
 
 ```
-select distinct city from station where city not rlike '^[aeiouAEIOU].*$';
+select distinct city from station 
+where city not rlike '^[aeiouAEIOU].*$';
 ```
 
 ### 14. Query the list of CITY names from STATION that do not end with vowels. Your result cannot contain duplicates.
 
 ```
-select distinct city from station where upper(substr(city, length(city), 1)) not in ('A','E','I','O','U') and lower(substr(city, length(city),1)) not in ('a','e','i','o','u');
+select distinct city from station
+ where upper(substr(city, length(city), 1)) not in ('A','E','I','O','U') 
+ and lower(substr(city, length(city),1)) not in ('a','e','i','o','u');
 ```
 
 ### 15. Query the list of CITY names from STATION that either do not start with vowels or do not end with vowels. Your result cannot contain duplicates.
 
 ```
-select distinct city from station where lower(substr(city,1,1)) not in ('a','e','i','o','u') or lower(substr(city,length(city),1)) not in ('a','e','i','o','u');
+select distinct city from station
+ where lower(substr(city,1,1)) not in ('a','e','i','o','u')
+  or lower(substr(city,length(city),1)) not in ('a','e','i','o','u');
 ```
 
 ### 16. Query the list of CITY names from STATION that do not start with vowels and do not end with vowels. Your result cannot contain duplicates.
 
 ```
-select distinct city from station where lower(substr(city,1,1)) not in ('a','e','i','o','u') and lower(substr(city,length(city),1)) not in ('a','e','i','o','u');
+select distinct city from station
+ where lower(substr(city,1,1)) not in ('a','e','i','o','u')
+  and lower(substr(city,length(city),1)) not in ('a','e','i','o','u');
 ```
 
 ### 17. [Sales Analysis III Leetcode](https://leetcode.com/problems/sales-analysis-iii/description/) - Write a solution to report the products that were only sold in the first quarter of 2019. That is, between 2019-01-01 and 2019-03-31 inclusive.
 
 ```
-select product_id,product_name from product inner join sales using(product_id) group by product_id  having min(sale_date) >= '2019-01-01' and max(sale_Date) <= '2019-03-31';
+select product_id,product_name from product inner join sales using(product_id)
+ group by product_id  having min(sale_date) >= '2019-01-01' and max(sale_Date) <= '2019-03-31';
 ```
 
 ### 18. [Article Views I Leetcode](https://leetcode.com/problems/article-views-i/description/) - Write an SQL query to find all the authors that viewed at least one of their own articles. Return the result table sorted by id in ascending order.
 
 ```
-select distinct author_id as id from views where author_id=viewer_id order by id;
+select distinct author_id as id from views 
+where author_id=viewer_id order by id;
 ```
 
 ### 19. [Immediate food delivery I Leetcode](https://leetcode.com/problems/immediate-food-delivery-i/) - Write an SQL query to find the percentage of immediate orders in the 
 
 ```
-select round(avg(order_date = customer_pref_delivery_date)*100,2)as immediate_percentage from delivery;
+select round(avg(order_date = customer_pref_delivery_date)*100,2) 
+as immediate_percentage from delivery;
 ```
 
 ### 20. [Ads performance Leetcode](https://leetcode.com/problems/ads-performance/) - Write an SQL query to find the ctr of each Ad. Round ctr to two decimal points. Return the result table ordered by ctr in descending order and by ad_id in ascending order in case of a tie.
 
 ```
-select ad_id,round(avg(case when action="Clicked" then 1 else 0 end)*100,2) as ctr group by ad_id order by ctr desc,ad_id;
+select ad_id,
+round(avg(case when action="Clicked" then 1 else 0 end)*100,2) as ctr from Ads group by ad_id order by ctr desc,ad_id;
 ```
 
 ### 21. [Find the team size Leetcode](https://leetcode.com/problems/find-the-team-size/) - Write an SQL query to find the team size of each of the employees. Return result table in any order.
