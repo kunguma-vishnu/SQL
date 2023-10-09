@@ -104,3 +104,45 @@ select distinct city from station where lower(substr(city,1,1)) not in ('a','e',
 ```
 select distinct city from station where lower(substr(city,1,1)) not in ('a','e','i','o','u') and lower(substr(city,length(city),1)) not in ('a','e','i','o','u');
 ```
+
+### 17. [Sales Analysis III Leetcode](https://leetcode.com/problems/sales-analysis-iii/description/) - Write a solution to report the products that were only sold in the first quarter of 2019. That is, between 2019-01-01 and 2019-03-31 inclusive.
+
+```
+select product_id,product_name from product inner join sales using(product_id) group by product_id  having min(sale_date) >= '2019-01-01' and max(sale_Date) <= '2019-03-31';
+```
+
+### 18. [Article Views I Leetcode](https://leetcode.com/problems/article-views-i/description/) - Write an SQL query to find all the authors that viewed at least one of their own articles. Return the result table sorted by id in ascending order.
+
+```
+select distinct author_id as id from views where author_id=viewer_id order by id;
+```
+
+### 19. [Immediate food delivery I Leetcode](https://leetcode.com/problems/immediate-food-delivery-i/) - Write an SQL query to find the percentage of immediate orders in the 
+
+```
+select round(avg(order_date = customer_pref_delivery_date)*100,2)as immediate_percentage from delivery;
+```
+
+### 20. [Ads performance Leetcode](https://leetcode.com/problems/ads-performance/) - Write an SQL query to find the ctr of each Ad. Round ctr to two decimal points. Return the result table ordered by ctr in descending order and by ad_id in ascending order in case of a tie.
+
+```
+select ad_id,round(avg(case when action="Clicked" then 1 else 0 end)*100,2) as ctr group by ad_id order by ctr desc,ad_id;
+```
+
+### 21. [Find the team size Leetcode](https://leetcode.com/problems/find-the-team-size/) - Write an SQL query to find the team size of each of the employees. Return result table in any order.
+
+```
+select e1.employee_id,count(*) from employee e1 left join employee e2 using(team_id) group by e1.employee_id;
+```
+
+### 22. [Weather Type Leetcode](https://leetcode.com/problems/weather-type-in-each-country/) - Write an SQL query to find the type of weather in each country for November 2019. The type of weather is: ● Cold if the average weather_state is less than or equal 15, ● Hot if the average weather_state is greater than or equal to 25, and ● Warm otherwise. Return result table in any order.
+
+```
+select country_name,(
+case when avg(weather_state)<=15 then 'Cold'
+when avg(weather_state)>=25 then 'Hot'
+else 'Warm' end
+)as weather_type from country left join
+ weather using(country_id) where day between '2019-11-01' and 
+ '2019-11-30' group by country_name;
+```
